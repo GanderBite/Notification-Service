@@ -5,6 +5,7 @@
   "scripts": {
     "start": "npx tsx --env-file=.env --watch  src/index.ts",
     "lint": "npx eslint . --fix",
+    "db:migrate": "npx tsx --env-file=.env src/database/scripts/migrate.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npx lefthook install"
   },
@@ -12,6 +13,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.844.0",
+    "@aws-sdk/lib-dynamodb": "^3.844.0",
+    "@aws-sdk/util-dynamodb": "^3.844.0",
+    "dotenv": "^17.2.0",
     "express": "^5.1.0"
   },
   "devDependencies": {
