@@ -9,5 +9,9 @@ userPreferencesRouter.delete(
   '/:userId',
   userPreferencesController.deleteUserPreference,
 );
+userPreferencesRouter.put(
+  '/:userId',
+  userPreferencesController.updateUserPreference,
+);
 
 export { userPreferencesRouter };

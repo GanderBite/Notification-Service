@@ -2,9 +2,12 @@ import { ConditionalCheckFailedException } from '@aws-sdk/client-dynamodb';
 import { DeleteCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
 
 import { CreateUserPreferenceDto } from '@/api/application/dtos/CreateUserPreferenceDto';
+import { UpdateUserPreferenceDto } from '@/api/application/dtos/UpdateUserPreferenceDto';
 import { IUserPreferencesRepository } from '@/api/application/ports/IUserPreferencesRepository';
 import { CreateUserPreferenceError } from '@/api/domain/errors/CreateUserPreferenceError';
 import { DeleteUserPreferencesError } from '@/api/domain/errors/DeleteUserPreferencesError';
+import { UpdateUserPreferenceError } from '@/api/domain/errors/UpdateUserPreferenceError';
+import { UserPreferenceNotFound } from '@/api/domain/errors/UserPreferenceNotFound';
 import { UserPreferencesAlreadyExists } from '@/api/domain/errors/UserPreferencesAlreadyExists';
 import { db } from '@/db';
 import { Id } from '@/shared/entities/Id';
@@ -38,10 +41,10 @@ export class UserPreferencesRepository implements IUserPreferencesRepository {
     }
   }
 
-  async remove(entryId: Id): Promise<void> {
+  async remove(userId: Id): Promise<void> {
     const command = new DeleteCommand({
       Key: {
-        userId: entryId.toString(),
+        userId: userId.toString(),
       },
       TableName: this.tableName,
     });
@@ -51,6 +54,29 @@ export class UserPreferencesRepository implements IUserPreferencesRepository {
     } catch (err) {
       logger.error(err);
       throw new DeleteUserPreferencesError();
+    }
+  }
+
+  async update(userId: Id, dto: UpdateUserPreferenceDto): Promise<void> {
+    const command = new PutCommand({
+      ConditionExpression: 'attribute_exists(userId)',
+      Item: {
+        dndWindows: dto.getDndWindows(),
+        preferences: dto.getPreferences(),
+        userId: userId.toString(),
+      },
+      TableName: this.tableName,
+    });
+
+    try {
+      await db.send(command);
+    } catch (err) {
+      if (err instanceof ConditionalCheckFailedException) {
+        throw new UserPreferenceNotFound(userId);
+      }
+
+      logger.error(err);
+      throw new UpdateUserPreferenceError();
     }
   }
 }

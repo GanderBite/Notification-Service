@@ -1,3 +1,5 @@
-export interface ICreatePort<TUpdateDto> {
-  update(dto: TUpdateDto): Promise<void>;
+import { Id } from '../entities/Id';
+
+export interface IUpdatePort<TUpdateDto> {
+  update(entryId: Id, dto: TUpdateDto): Promise<void>;
 }

@@ -1,12 +1,10 @@
-import { Id } from '@/shared/entities/Id';
-
-import { DeleteUserPreferenceDto } from '../dtos/DeleteUserPreferenceDto';
+import { UserPreferenceParamsDto } from '../dtos/UserPreferenceParamsDto';
 import { IUserPreferencesRepository } from '../ports/IUserPreferencesRepository';
 
 export function deleteUserPreferenceUseCase(
   userPreferenceRepository: IUserPreferencesRepository,
 ) {
-  return async (dto: DeleteUserPreferenceDto) => {
+  return async (dto: UserPreferenceParamsDto) => {
     return userPreferenceRepository.remove(dto.getUserId());
   };
 }

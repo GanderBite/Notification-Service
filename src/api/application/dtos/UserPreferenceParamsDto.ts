@@ -6,7 +6,7 @@ import { ValidationError } from '@/shared/errors/ValidationError';
 const schema = z.object({
   userId: z.uuidv4(),
 });
-export class DeleteUserPreferenceDto {
+export class UserPreferenceParamsDto {
   private userId: Id;
 
   constructor(params: Record<string, unknown>) {
