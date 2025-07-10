@@ -8,6 +8,7 @@ const schema = z.object({
     .min(1, 'Event type cannot be empty')
     .regex(/^[a-z][a-z0-9]*(_[a-z0-9]+)*$/, 'Event type must be snake_case'),
 });
+
 export class EventType {
   constructor(public readonly type: string) {
     const result = schema.safeParse({ type });

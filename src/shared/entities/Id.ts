@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import { z } from 'zod';
 
 import { ValidationError } from '../errors/ValidationError';
@@ -13,6 +14,10 @@ export class Id {
     if (result.error) {
       throw new ValidationError(z.flattenError(result.error).fieldErrors);
     }
+  }
+
+  static generate() {
+    return new Id(v4());
   }
 
   equals(other: Id) {

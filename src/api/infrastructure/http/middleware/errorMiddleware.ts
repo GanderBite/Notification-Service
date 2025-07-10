@@ -14,7 +14,7 @@ export function errorMiddleware(
   _next: NextFunction,
 ) {
   if (err instanceof ApiError) {
-    sendError(res, err.name, err.statusCode, err.details ?? err.message);
+    sendError(res, err.name, err.statusCode, err.details, err.message);
   } else {
     sendError(res);
   }

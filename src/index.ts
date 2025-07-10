@@ -3,6 +3,7 @@ import express from 'express';
 
 import { errorMiddleware } from './api/infrastructure/http/middleware/errorMiddleware';
 import { eventsRouter } from './api/infrastructure/http/routers/eventsRouter';
+import { userPreferencesRouter } from './api/infrastructure/http/routers/userPreferencesRouter';
 import { httpLogger } from './shared/utils/logger';
 
 dotenv.config();
@@ -12,6 +13,7 @@ const server = (() => {
   app.use(express.json());
   app.use(httpLogger);
   app.use('/events', eventsRouter);
+  app.use('/user-preferences', userPreferencesRouter);
   app.use(errorMiddleware);
 
   return app;
