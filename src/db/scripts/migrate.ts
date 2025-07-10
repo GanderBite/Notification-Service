@@ -11,7 +11,7 @@ import { db } from '..';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const SCHEMA_DIR = path.join(__dirname, './schemas');
+const SCHEMA_DIR = path.join(__dirname, '../schemas');
 
 (async () => {
   console.log('Running migrations from schemas directory...\n');

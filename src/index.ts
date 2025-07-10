@@ -1,16 +1,24 @@
+import dotenv from 'dotenv';
 import express from 'express';
 
-const app = express();
-app.use(express.json());
+import { errorMiddleware } from './api/infrastructure/http/middleware/errorMiddleware';
+import { eventsRouter } from './api/infrastructure/http/routers/eventsRouter';
+import { httpLogger } from './shared/utils/logger';
+
+dotenv.config();
+
+const server = (() => {
+  const app = express();
+  app.use(express.json());
+  app.use(httpLogger);
+  app.use('/events', eventsRouter);
+  app.use(errorMiddleware);
+
+  return app;
+})();
 
 const port = process.env.PORT || 3000;
 
-app.get('/', (_req, res) => {
-  res.send({
-    message: 'hello world',
-  });
-});
-
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`The server is running at http://localhost:${port}`);
 });
