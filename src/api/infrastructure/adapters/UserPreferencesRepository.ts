@@ -22,6 +22,7 @@ export class UserPreferencesRepository implements IUserPreferencesRepository {
       Item: {
         dndWindows: dto.getDndWindows(),
         preferences: dto.getPreferences(),
+        timezone: dto.getTimezone().toString(),
         userId: dto.getUserId().toString(),
       },
       TableName: this.tableName,
@@ -63,6 +64,7 @@ export class UserPreferencesRepository implements IUserPreferencesRepository {
       Item: {
         dndWindows: dto.getDndWindows(),
         preferences: dto.getPreferences(),
+        timezone: dto.getTimezone().toString(),
         userId: userId.toString(),
       },
       TableName: this.tableName,

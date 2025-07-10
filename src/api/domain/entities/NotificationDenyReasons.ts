@@ -1,0 +1,5 @@
+export enum NotificationDenyReasons {
+  DND_ACTIVE = 'DND_ACTIVE',
+  NO_CHANNELS = 'NO_CHANNLES',
+  NOTIFICATION_DISABLED = 'NOTIFICATION_DISABLED',
+}

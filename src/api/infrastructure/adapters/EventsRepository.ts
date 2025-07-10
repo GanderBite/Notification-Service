@@ -8,6 +8,7 @@ import { logger } from '@/shared/utils/logger';
 
 export class EventsRepository implements IEventRepository {
   private readonly table = 'Events';
+
   async create(dto: CreateEventDto) {
     const command = new PutCommand({
       Item: {
