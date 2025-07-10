@@ -15,7 +15,6 @@ const schema = z.object({
 
 export class CreateUserPreferenceDto {
   private dndWindows: Array<DndWindow>;
-  private preferenceId: Id;
   private preferences: Record<string, Preference>;
   private timezone: UserTimezone;
   private userId: Id;
@@ -30,7 +29,6 @@ export class CreateUserPreferenceDto {
     const { dndWindows, preferences, timezone, userId } = result.data;
 
     this.dndWindows = dndWindows;
-    this.preferenceId = Id.generate();
     this.preferences = preferences;
     this.timezone = new UserTimezone(timezone);
     this.userId = new Id(userId);
@@ -38,10 +36,6 @@ export class CreateUserPreferenceDto {
 
   getDndWindows() {
     return this.dndWindows;
-  }
-
-  getPreferenceId() {
-    return this.preferenceId;
   }
 
   getPreferences() {

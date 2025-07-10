@@ -1,9 +1,10 @@
 import { ConditionalCheckFailedException } from '@aws-sdk/client-dynamodb';
-import { PutCommand } from '@aws-sdk/lib-dynamodb';
+import { DeleteCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
 
 import { CreateUserPreferenceDto } from '@/api/application/dtos/CreateUserPreferenceDto';
 import { IUserPreferencesRepository } from '@/api/application/ports/IUserPreferencesRepository';
 import { CreateUserPreferenceError } from '@/api/domain/errors/CreateUserPreferenceError';
+import { DeleteUserPreferencesError } from '@/api/domain/errors/DeleteUserPreferencesError';
 import { UserPreferencesAlreadyExists } from '@/api/domain/errors/UserPreferencesAlreadyExists';
 import { db } from '@/db';
 import { Id } from '@/shared/entities/Id';
@@ -17,7 +18,6 @@ export class UserPreferencesRepository implements IUserPreferencesRepository {
       ConditionExpression: 'attribute_not_exists(userId)',
       Item: {
         dndWindows: dto.getDndWindows(),
-        preferenceId: dto.getPreferenceId().toString(),
         preferences: dto.getPreferences(),
         userId: dto.getUserId().toString(),
       },
@@ -27,7 +27,7 @@ export class UserPreferencesRepository implements IUserPreferencesRepository {
     try {
       await db.send(command);
 
-      return dto.getPreferenceId();
+      return dto.getUserId();
     } catch (err) {
       if (err instanceof ConditionalCheckFailedException) {
         throw new UserPreferencesAlreadyExists(dto.getUserId());
@@ -39,6 +39,18 @@ export class UserPreferencesRepository implements IUserPreferencesRepository {
   }
 
   async remove(entryId: Id): Promise<void> {
-    throw new Error('Method not implemented.');
+    const command = new DeleteCommand({
+      Key: {
+        userId: entryId.toString(),
+      },
+      TableName: this.tableName,
+    });
+
+    try {
+      await db.send(command);
+    } catch (err) {
+      logger.error(err);
+      throw new DeleteUserPreferencesError();
+    }
   }
 }

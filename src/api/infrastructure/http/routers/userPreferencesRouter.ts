@@ -5,5 +5,9 @@ import { userPreferencesController } from '../controllers/userPreferencesControl
 const userPreferencesRouter = Router();
 
 userPreferencesRouter.post('/', userPreferencesController.createUserPreference);
+userPreferencesRouter.delete(
+  '/:userId',
+  userPreferencesController.deleteUserPreference,
+);
 
 export { userPreferencesRouter };
