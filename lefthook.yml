@@ -1,0 +1,8 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - run: npx eslint {staged_files}
+      glob: '*.{js,ts}'
+      stage_fixed: true
+    - run: npx tsc --pretty
+      glob: '*.{ts}'
