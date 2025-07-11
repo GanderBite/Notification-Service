@@ -25,6 +25,7 @@ export class UserPreference {
     if (!pref) {
       throw new PreferenceNotFoundError(eventType);
     }
+
     return pref;
   }
 
@@ -54,6 +55,7 @@ export class UserPreference {
 
     for (const window of windows) {
       const { endTime, startTime } = window;
+
       const start = dayjs.tz(
         `${baseDate} ${startTime}`,
         this.timezone.toString(),

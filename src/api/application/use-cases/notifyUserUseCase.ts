@@ -33,7 +33,7 @@ export function notifyUserUseCase(
       );
     }
 
-    if (!preference.channels) {
+    if (!preference.channels.length) {
       return new DenyNotificationDto(
         NotificationDenyReasons.NO_CHANNELS,
         dto.getEventId(),

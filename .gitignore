@@ -1,6 +1,9 @@
 # Node modules
 node_modules/
 
+# tests
+coverage
+
 # Build output
 dist/
 build/

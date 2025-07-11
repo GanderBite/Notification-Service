@@ -12,7 +12,7 @@ export class EventsRepository implements IEventRepository {
   async create(dto: CreateEventDto) {
     const command = new PutCommand({
       Item: {
-        eventId: dto.getEventId(),
+        eventId: dto.getEventId().toString(),
         eventType: dto.getEventType().toString(),
         payload: dto.getPayload(),
         timestamp: dto.getTimestamp(),

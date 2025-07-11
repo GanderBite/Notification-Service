@@ -2,41 +2,39 @@ import { Request, Response } from 'express';
 
 import { CreateEventDto } from '@/api/application/dtos/CreateEventDto';
 import { NotifyUserDto } from '@/api/application/dtos/NotifyUserDto';
+import { IEventQuery } from '@/api/application/ports/IEventQuery';
+import { IEventRepository } from '@/api/application/ports/IEventRepository';
+import { IUserPreferencesQuery } from '@/api/application/ports/IUserPreferencesQuery';
 import { createEventUseCase } from '@/api/application/use-cases/createEventUseCase';
 import { notifyUserUseCase } from '@/api/application/use-cases/notifyUserUseCase';
 import { sendSuccess } from '@/shared/entities/SuccessResponse';
 
-import { EventsQuery } from '../../adapters/EventsQuery';
-import { EventsRepository } from '../../adapters/EventsRepository';
-import { UserPreferencesQuery } from '../../adapters/UserPreferencesQuery';
 import { handler } from '../middleware/handler';
 
-export const eventsController = (() => {
-  const repository = new EventsRepository();
-  const eventsQuery = new EventsQuery();
-  const userPreferencesQuery = new UserPreferencesQuery();
+export class EventsController {
+  public createEventHandler = handler(this.createEvent.bind(this));
 
-  const createEvent = handler(async (req: Request, res: Response) => {
+  public notifyUserHandler = handler(this.notifyUser.bind(this));
+
+  constructor(
+    private readonly repository: IEventRepository,
+    private readonly eventsQuery: IEventQuery,
+    private readonly userPreferencesQuery: IUserPreferencesQuery,
+  ) {}
+
+  private async createEvent(req: Request, res: Response): Promise<void> {
     const dto = new CreateEventDto(req.body);
-
-    const createdId = await createEventUseCase(repository)(dto);
-
+    const createdId = await createEventUseCase(this.repository)(dto);
     sendSuccess(res, { id: createdId.toString() }, 201);
-  });
+  }
 
-  const notifyUser = handler(async (req: Request, res: Response) => {
+  private async notifyUser(req: Request, res: Response): Promise<void> {
     const dto = new NotifyUserDto(req.params);
-
     const data = await notifyUserUseCase(
-      eventsQuery,
-      userPreferencesQuery,
+      this.eventsQuery,
+      this.userPreferencesQuery,
     )(dto);
 
     sendSuccess(res, data.getPayload(), data.getStatus());
-  });
-
-  return {
-    createEvent,
-    notifyUser,
-  };
-})();
+  }
+}

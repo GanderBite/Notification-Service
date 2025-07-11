@@ -21,6 +21,10 @@ export class DenyNotificationDto {
     };
   }
 
+  getReason() {
+    return this.reason;
+  }
+
   getStatus() {
     return this.status;
   }

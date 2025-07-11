@@ -1,17 +1,19 @@
 import { Router } from 'express';
 
-import { userPreferencesController } from '../controllers/userPreferencesController';
+import { UserPreferencesRepository } from '../../adapters/UserPreferencesRepository';
+import { UserPreferencesController } from '../controllers/UserPreferencesController';
+
+const controller = new UserPreferencesController(
+  new UserPreferencesRepository(),
+);
 
 const userPreferencesRouter = Router();
 
-userPreferencesRouter.post('/', userPreferencesController.createUserPreference);
+userPreferencesRouter.post('/', controller.createUserPreferenceHandler);
 userPreferencesRouter.delete(
   '/:userId',
-  userPreferencesController.deleteUserPreference,
+  controller.deleteUserPreferenceHandler,
 );
-userPreferencesRouter.put(
-  '/:userId',
-  userPreferencesController.updateUserPreference,
-);
+userPreferencesRouter.put('/:userId', controller.updateUserPreferenceHandler);
 
 export { userPreferencesRouter };

@@ -1,10 +1,19 @@
 import { Router } from 'express';
 
-import { eventsController } from '../controllers/eventsController';
+import { EventsQuery } from '../../adapters/EventsQuery';
+import { EventsRepository } from '../../adapters/EventsRepository';
+import { UserPreferencesQuery } from '../../adapters/UserPreferencesQuery';
+import { EventsController } from '../controllers/EventsController';
+
+const controller = new EventsController(
+  new EventsRepository(),
+  new EventsQuery(),
+  new UserPreferencesQuery(),
+);
 
 const eventsRouter = Router();
 
-eventsRouter.post('/', eventsController.createEvent);
-eventsRouter.post('/:eventId', eventsController.notifyUser);
+eventsRouter.post('/', controller.createEventHandler);
+eventsRouter.post('/:eventId', controller.notifyUserHandler);
 
 export { eventsRouter };
