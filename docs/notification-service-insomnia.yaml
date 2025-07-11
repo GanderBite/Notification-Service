@@ -1,0 +1,205 @@
+type: collection.insomnia.rest/5.0
+name: Notification Service
+meta:
+  id: wrk_64c17d584eb24565bc6f936d7ea522bc
+  created: 1751481746917
+  modified: 1752210157009
+  description: ""
+collection:
+  - name: User Preferences
+    meta:
+      id: fld_bce2e47f39dd44f592e02934fe60ad84
+      created: 1752069576668
+      modified: 1752069576668
+      sortKey: -1752069576668
+      description: ""
+    children:
+      - url: http://localhost:3000/user-preferences
+        name: create
+        meta:
+          id: req_6c91accc00ca4931a1e061d89f1069a1
+          created: 1751481750020
+          modified: 1752208737046
+          isPrivate: false
+          description: ""
+          sortKey: -1752069581402
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"dndWindows": [
+            		{"dayOfWeek": 6, "startTime": "22:00", "endTime": "06:00"}
+            	],
+            	"preferences": {
+            		"items_shipped": {
+            			"enabled": true,
+            			"channels": ["email"]
+            		}
+            	},
+            	"timezone": "Europe/Warsaw",
+            	"userId": "2e2657e5-8d7b-4732-82cc-dbc78ad2a648"
+            }
+        parameters:
+          - id: pair_1a4289c6ed0d41eb96f511f7c8e86715
+            name: ""
+            value: ""
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/user-preferences/:userId
+        name: update
+        meta:
+          id: req_ce07cc4de696460ea3016e06169c3434
+          created: 1752044547572
+          modified: 1752174167184
+          isPrivate: false
+          description: ""
+          sortKey: -1752069581502
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"dndWindows": [
+            		{"dayOfWeek": 1, "startTime": "22:00", "endTime": "06:00"}
+            	],
+            	"preferences": {
+            		"items_shipped": {
+            			"enabled": true,
+            			"channels": ["email"]
+            		}
+            	},
+            	"timezone": "Europe/Warsaw"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+        pathParameters:
+          - name: userId
+            value: 2e2657e5-8d7b-4732-82cc-dbc78ad2a648
+      - url: http://localhost:3000/user-preferences/:userId
+        name: delete
+        meta:
+          id: req_8162d3840a064091801001b88d2c64c2
+          created: 1752046515216
+          modified: 1752173287135
+          isPrivate: false
+          description: ""
+          sortKey: -1752069581602
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+        pathParameters:
+          - name: userId
+            value: 2e2657e5-8d7b-4732-82cc-dbc78ad2a648
+  - name: Events
+    meta:
+      id: fld_b6fe618699ad4ebc8d7d37e1effef403
+      created: 1752069604281
+      modified: 1752069604281
+      sortKey: -1752069604281
+      description: ""
+    children:
+      - url: http://localhost:3000/events
+        name: create
+        meta:
+          id: req_1db1c01c67d94769bd86cc4479be0b14
+          created: 1752060042785
+          modified: 1752210137520
+          isPrivate: false
+          description: ""
+          sortKey: -1752069607211
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "eventType": "items_shipped",
+              "payload": {
+                "orderId": "b7d9f7c2-3cb1-4eb4-87c2-6c3e29cd7891"
+              },
+              "timestamp": "2025-07-09",
+              "userId": "2e2657e5-8d7b-4732-82cc-dbc78ad2a648"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/events/:eventId
+        name: notify
+        meta:
+          id: req_905b3fb7af154a2ab50a063b94db1781
+          created: 1752061943441
+          modified: 1752176808528
+          isPrivate: false
+          description: ""
+          sortKey: -1752069607311
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+        pathParameters:
+          - name: eventId
+            value: 9d42f9ab-59b9-4895-9936-2bd02b952aff
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_124c9995cbe4656f15aba0401647ae2e133a391e
+    created: 1751481746921
+    modified: 1751481746921
+environments:
+  name: Base Environment
+  meta:
+    id: env_124c9995cbe4656f15aba0401647ae2e133a391e
+    created: 1751481746919
+    modified: 1751481746919
+    isPrivate: false

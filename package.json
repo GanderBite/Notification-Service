@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx tsx --env-file=.env --watch  src/index.ts",
+    "build": "tsc",
     "lint": "npx eslint . --fix",
     "db:migrate": "npx tsx --env-file=.env src/db/scripts/migrate.ts",
     "test": "jest",

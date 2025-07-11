@@ -17,7 +17,7 @@ import { Id } from '@/shared/entities/Id';
 import { InMemoryEventsQuery } from '../../infrastructure/adapters/InMemoryEventsQuery';
 import { InMemoryUserPreferencesQuery } from '../../infrastructure/adapters/InMemoryUserPreferencesQuery';
 
-describe('notifyUserUseCase - Integration', () => {
+describe('notifyUserUseCase', () => {
   const userId = Id.generate();
   const eventId = Id.generate();
   const eventType = new EventType('items_shipped');

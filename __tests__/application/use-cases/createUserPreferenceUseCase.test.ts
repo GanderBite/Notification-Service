@@ -5,7 +5,7 @@ import { Id } from '@/shared/entities/Id';
 
 import { InMemoryUserPreferenceRepository } from '../../infrastructure/adapters/InMemoryUserPreferenceRepository';
 
-describe('createUserPreferenceUseCase - Integration', () => {
+describe('createUserPreferenceUseCase', () => {
   it('should create an entry in database', async () => {
     const repository = new InMemoryUserPreferenceRepository();
 

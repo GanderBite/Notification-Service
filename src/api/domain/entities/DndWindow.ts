@@ -10,7 +10,7 @@ export const dndWindowSchema = z
   })
   .refine(({ endTime, startTime }) => startTime !== endTime, {
     message: 'startTime and endTime must be different',
-    path: ['endTime'], // Or use [] to apply to the whole object
+    path: ['endTime'],
   });
 
 export type DndWindow = z.infer<typeof dndWindowSchema>;
